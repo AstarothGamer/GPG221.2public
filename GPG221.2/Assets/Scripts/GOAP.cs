@@ -18,9 +18,16 @@ public class GOAP : MonoBehaviour
         possibleActions.Clear();
         for (int i = 0; i < actions.Count; i++)
         {
-            if (actions[i].effects[i].name == Goal)
+            for (int e = 0; e < actions[i].effects.Count; e++)
             {
-                possibleActions.Add(actions[i]);
+                if (actions[i].effects[e].name == Goal)
+                {
+                    if (!possibleActions.Contains(actions[i]))
+                    {
+                        possibleActions.Add(actions[i]);
+                        break;
+                    }                   
+                }
             }
         }
     }
@@ -29,7 +36,7 @@ public class GOAP : MonoBehaviour
     {
         finalPlan.Clear();
         int bestLength = int.MaxValue;
-        List<Action> bestPath;
+        List<Action> bestPath = new();
 
         for (int i = 0; i < possibleActions.Count; i++)
         {
@@ -45,6 +52,21 @@ public class GOAP : MonoBehaviour
                 }
             }
         }
+
+        if (bestPath != null)
+        {
+            finalPlan = bestPath;
+            Debug.Log("final plan:");
+
+            for (int i = 0; i < finalPlan.Count; i++)
+            {
+                Debug.Log(finalPlan[i].name);
+            }
+        }
+        else
+        {
+            Debug.LogError("Target can not be achieved");
+        }
     }
 
     public bool PlanPath(Action action, List<Action> path, List<string> visited)
@@ -59,29 +81,52 @@ public class GOAP : MonoBehaviour
                 }
             }
 
+            bool hasEffect = false;
             for (int j = 0; j < worldState.receivedEffects.Count; j++)
             {
-                if (action.prerequisits[i].name != worldState.receivedEffects[j].name)
+                if (action.prerequisits[i].name == worldState.receivedEffects[j].name)
                 {
-                    Action subAction;
-                    for (int a = 0; a < actions.Count; a++)
-                    {
-                        for (int e = 0; e < actions[a].effects.Count; e++)
-                        {
-                            if (actions[a].effects[e].name == action.prerequisits[i].name)
-                            {
-                                subAction = actions[a];
-                            }
-                        }
-                    }
-
-                    // if (subAction == null)
-                    {
-                        return false;
-                    }
+                    hasEffect = true;
+                    break;
                 }
             }
+
+            if (!hasEffect)
+            {
+                Action subAction = null;
+                for (int a = 0; a < actions.Count; a++)
+                {
+                    for (int e = 0; e < actions[a].effects.Count; e++)
+                    {
+                        if (actions[a].effects[e].name == action.prerequisits[i].name)
+                        {
+                            subAction = actions[a];
+                            break;
+                        }
+                    }
+                    
+                    if (subAction != null)
+                    {
+                        break;
+                    }
+                }
+
+                if (subAction == null)
+                {
+                    return false;
+                }
+
+                visited.Add(action.prerequisits[i].name);
+
+                if (!PlanPath(subAction, path, visited))
+                {
+                    return false;
+                }
+            }
+
         }
+
+        path.Add(action);
         return true;
     }
 }
