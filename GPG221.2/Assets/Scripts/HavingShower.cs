@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class HavingShower : Action
 {
-    // public HavingShower(string name, WorldState worldState) : base(name, worldState)
-    // {
-    // }
-
-    // Start is called before the first frame update
     void Start()
     {
         actionName = "Having Shower";

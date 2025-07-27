@@ -6,9 +6,6 @@ using UnityEngine;
 
 public class WakingUp : Action
 {
-    // public WakingUp(string name, WorldState worldState) : base(name, worldState)
-    // {
-    // }
     void Start()
     {
         actionName = "Waking Up";

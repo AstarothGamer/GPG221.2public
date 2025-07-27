@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class DrivingToUni : Action
 {
-    // public DrivingToUni(string name, WorldState worldState) : base(name, worldState)
-    // {
-    // }
-
-    // Start is called before the first frame update
     void Start()
     {
         actionName = "Driving To Uni";

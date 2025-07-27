@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class FindingKeyInShelf : Action
 {
-    // public FindingKeyInShelf(string name, WorldState worldState) : base(name, worldState)
-    // {
-    // }
-
-    // Start is called before the first frame update
     void Start()
     {
         actionName = "Finding Key In Shelf";

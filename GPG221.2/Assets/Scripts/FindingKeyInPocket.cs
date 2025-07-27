@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class FindingKeyInPocket : Action
 {
-    // public FindingKeyInPocket(string name, WorldState worldState) : base(name, worldState)
-    // {
-    // }
-
     private void Start()
     {
         actionName = "Finding Key In Pocket";
