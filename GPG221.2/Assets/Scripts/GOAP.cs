@@ -10,8 +10,14 @@ public class GOAP : MonoBehaviour
     public List<Action> finalPlan;
     public List<Action> possibleActions;
     public List<Action> plan;
+    public List<Action> failedActions;
 
-    string Goal;
+    [SerializeField] public string Goal;
+
+    void Start()
+    {
+        CheckingActions();   
+    }
 
     public void CheckingActions()
     {
@@ -26,10 +32,11 @@ public class GOAP : MonoBehaviour
                     {
                         possibleActions.Add(actions[i]);
                         break;
-                    }                   
+                    }
                 }
             }
         }
+        FinalPlan();
     }
 
     public void FinalPlan()
@@ -104,7 +111,7 @@ public class GOAP : MonoBehaviour
                             break;
                         }
                     }
-                    
+
                     if (subAction != null)
                     {
                         break;
